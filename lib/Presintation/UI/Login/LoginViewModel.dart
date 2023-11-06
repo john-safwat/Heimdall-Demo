@@ -1,9 +1,12 @@
 import 'package:authdemo/Core/Base/BaseViewModel.dart';
+import 'package:authdemo/Domain/UseCase/LoginUserUseCase.dart';
 import 'package:authdemo/Presintation/UI/Login/LoginNavigator.dart';
 import 'package:flutter/material.dart';
 
 class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
+  LoginUserUseCase loginUserUseCase ;
+  LoginViewModel({required this.loginUserUseCase});
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
@@ -35,6 +38,35 @@ class LoginViewModel extends BaseViewModel<LoginNavigator> {
       return "password is less than 8 characters";
     }
     return null;
+  }
+
+
+  login()async{
+
+    if(formKey.currentState!.validate()){
+
+      try{
+        var response = await loginUserUseCase.invoke(email: emailController.text, password: passwordController.text);
+        if (response.emailVerified){
+          debugPrint(response.email);
+          debugPrint(response.displayName);
+          debugPrint(response.uid);
+          debugPrint(response.emailVerified.toString());
+          navigator!.goToHomeScreen();
+        }else {
+          await response.sendEmailVerification();
+          debugPrint("Email Verification Sent ");
+          debugPrint(response.email);
+          debugPrint(response.displayName);
+          debugPrint(response.uid);
+          debugPrint(response.emailVerified.toString());
+        }
+      }catch (e){
+        debugPrint(e.toString());
+      }
+
+    }
+
   }
 
 }

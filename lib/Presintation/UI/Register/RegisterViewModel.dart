@@ -55,8 +55,15 @@ class RegisterViewModel extends BaseViewModel<RegisterNavigator>{
     if(formKey.currentState!.validate()){
       try{
         var response = await useCase.invoke(name: nameController.text, email: emailController.text, password: passwordController.text);
-        debugPrint(response);
-        navigator!.goToHomeScreen();
+        debugPrint(response.email);
+        debugPrint(response.displayName);
+        debugPrint(response.uid);
+        debugPrint(response.emailVerified.toString());
+        if(!response.emailVerified){
+          await response.sendEmailVerification();
+        }else {
+          navigator!.goToLoginScreen();
+        }
       }catch(e){
         debugPrint(e.toString());
       }

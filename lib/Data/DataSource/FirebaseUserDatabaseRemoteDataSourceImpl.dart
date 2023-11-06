@@ -13,7 +13,7 @@ class FirebaseUserDatabaseRemoteDataSourceImpl implements FirebaseUserDatabaseRe
       var response = await userDatabase.createUser(user: user, uid: uid);
       return response;
     }catch(e){
-      return e.toString();
+      throw Exception();
     }
   }
 

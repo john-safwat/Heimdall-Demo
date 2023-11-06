@@ -12,16 +12,14 @@ class FirebaseUserAuth {
 
   var firebaseAuth = FirebaseAuth.instance;
 
-  Future<String> createUser({required UserDTO user})async{
+  Future<User> createUser({required UserDTO user})async{
     var response = await firebaseAuth.createUserWithEmailAndPassword(email: user.email, password: user.password);
     response.user!.updateDisplayName(user.name);
-    return response.user!.uid;
+    return response.user!;
   }
 
-  Future<String> login({required String email , required String password})async{
+  Future<User> login({required String email , required String password})async{
     var response = await firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
-    return response.user!.uid;
+    return response.user!;
   }
-
-
 }

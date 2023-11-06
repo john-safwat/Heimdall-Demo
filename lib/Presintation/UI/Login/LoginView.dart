@@ -1,4 +1,6 @@
 import 'package:authdemo/Core/Base/BaseStete.dart';
+import 'package:authdemo/Domain/UseCase/LoginUserUseCase.dart';
+import 'package:authdemo/Presintation/UI/Home/HomeView.dart';
 import 'package:authdemo/Presintation/UI/Login/LoginNavigator.dart';
 import 'package:authdemo/Presintation/UI/Login/LoginViewModel.dart';
 import 'package:authdemo/Presintation/UI/Register/RegisterView.dart';
@@ -28,6 +30,7 @@ class _LoginViewState extends BaseState<LoginView , LoginViewModel> implements L
           child: Column(
             children: [
               Form(
+                key: viewModel!.formKey,
                 child: Column(
                   children: [
                     TextFormField(
@@ -46,7 +49,9 @@ class _LoginViewState extends BaseState<LoginView , LoginViewModel> implements L
                       validator: (value) => viewModel!.passwordValidation(value!),
                     ),
                     const SizedBox(height: 20,),
-                    ElevatedButton(onPressed: (){},
+                    ElevatedButton(onPressed: (){
+                      viewModel!.login();
+                    },
                         child: const Padding(
                           padding:  EdgeInsets.all(10.0),
                           child: Row(
@@ -76,6 +81,11 @@ class _LoginViewState extends BaseState<LoginView , LoginViewModel> implements L
 
   @override
   LoginViewModel initViewModel() {
-    return LoginViewModel();
+    return LoginViewModel(loginUserUseCase: injectLoginUserUseCase());
+  }
+
+  @override
+  goToHomeScreen() {
+    Navigator.pushReplacementNamed(context, HomeView.routeName);
   }
 }

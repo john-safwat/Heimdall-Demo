@@ -1,11 +1,7 @@
 import 'package:authdemo/Core/Base/BaseStete.dart';
-import 'package:authdemo/Data/DataSource/FirebaseAuthRemoteDataSourceImpl.dart';
-import 'package:authdemo/Data/Firebase/FirebaseAuth.dart';
-import 'package:authdemo/Data/Firebase/UserDatabase.dart';
-import 'package:authdemo/Data/Repository/UserRepositoryImpl.dart';
-import 'package:authdemo/Domain/Repository/UserRepository.dart';
 import 'package:authdemo/Domain/UseCase/CreateUserUseCase.dart';
 import 'package:authdemo/Presintation/UI/Home/HomeView.dart';
+import 'package:authdemo/Presintation/UI/Login/LoginView.dart';
 import 'package:authdemo/Presintation/UI/Register/RegisterNavigator.dart';
 import 'package:authdemo/Presintation/UI/Register/RegisterViewModel.dart';
 import 'package:flutter/material.dart';
@@ -82,8 +78,9 @@ class _RegisterViewState extends BaseState<RegisterView , RegisterViewModel> imp
     );
   }
 
+
   @override
-  goToHomeScreen() {
-    Navigator.pushReplacementNamed(context, HomeView.routeName);
+  goToLoginScreen() {
+    Navigator.pushReplacementNamed(context, LoginView.routeName);
   }
 }
